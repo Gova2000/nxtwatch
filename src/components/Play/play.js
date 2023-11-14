@@ -9,7 +9,7 @@ import {
 } from 'react-icons/ai'
 import {RiPlayListAddFill} from 'react-icons/ri'
 import Cookies from 'js-cookie'
-
+import Loader from 'react-loader-spinner'
 import Navbar from '../Nav/nav'
 
 import CatAlign from '../Navalign/align'
@@ -32,12 +32,18 @@ import {
 
 const Constlist = {
   initial: 'INITIAL',
-  progress: 'PROGESS',
+  progress: 'PROGRESS',
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
 class PlayVideo extends Component {
-  state = {video: [], liked: false, dislike: false, save: false, status: ''}
+  state = {
+    video: [],
+    liked: false,
+    dislike: false,
+    save: false,
+    status: Constlist.initial,
+  }
 
   componentDidMount() {
     this.VideoFetch()
@@ -56,6 +62,7 @@ class PlayVideo extends Component {
   }
 
   VideoFetch = async () => {
+    this.setState({status: Constlist.progress})
     const {match} = this.props
     const {params} = match
     const {id} = params
@@ -88,29 +95,35 @@ class PlayVideo extends Component {
       }
       this.setState({video: update, status: Constlist.success})
     } else {
-      this.setState({status: Constlist.success})
+      this.setState({status: Constlist.failure})
     }
   }
 
-  failure = () => {
-    const {is} = this.state
+  failure = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {isdark} = value
 
-    const Src = is
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-    return (
-      <D>
-        <NoVs src={Src} alt="failure view" />
-        <h1>Oops! Something Went Wrong</h1>
-        <PP>
-          We are having some trouble to complete your request. Please try again.
-        </PP>
-        <Retry type="button" onClick={this.VideoFetch}>
-          Retry
-        </Retry>
-      </D>
-    )
-  }
+        const Src = isdark
+          ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+          : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+
+        return (
+          <D>
+            <NoVs src={Src} alt="failure view" />
+            <h1>Oops! Something Went Wrong</h1>
+            <PP>
+              We are having some trouble to complete your request. Please try
+              again.
+            </PP>
+            <Retry type="button" onClick={this.VideoFetch}>
+              Retry
+            </Retry>
+          </D>
+        )
+      }}
+    </CartContext.Consumer>
+  )
 
   Play = () => (
     <CartContext.Consumer>
@@ -141,13 +154,18 @@ class PlayVideo extends Component {
         const likeicon = liked ? <AiFillLike /> : <AiOutlineLike />
         const dislikeicon = dislike ? <AiFillDislike /> : <AiOutlineDislike />
 
-        const colored = liked ? '#3b82f6' : '#94a3b8'
-        const colored1 = dislike ? '#3b82f6' : '#94a3b8'
-        const colored2 = save ? '#3b82f6' : '#94a3b8'
+        const colored = liked ? '#2563eb' : '#64748b'
+        const colored1 = dislike ? '#2563eb' : '#64748b'
+        const colored2 = save ? '#2563eb' : '#64748b'
+
         const stext = save ? 'Saved' : 'Save'
 
         return (
-          <PlayBG bgcolor={bgcolor} color={color}>
+          <PlayBG
+            bgcolor={bgcolor}
+            color={color}
+            data-testid="videoItemDetails"
+          >
             <Navbar />
             <Divcol>
               <CatAlign />
@@ -176,7 +194,7 @@ class PlayVideo extends Component {
                   </Div>
                   <hr />
                   <Div>
-                    <ProImg src={profileImg} alt="logo" />
+                    <ProImg src={profileImg} alt="channel logo" />
                     <Div>
                       <div>
                         <p>{name}</p>
@@ -194,6 +212,12 @@ class PlayVideo extends Component {
         )
       }}
     </CartContext.Consumer>
+  )
+
+  loading = () => (
+    <D data-testid="loader">
+      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+    </D>
   )
 
   render() {

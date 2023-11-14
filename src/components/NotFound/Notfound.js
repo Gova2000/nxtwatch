@@ -25,7 +25,7 @@ const NotFound = () => (
             <Div2>
               <Img src={Src} alt="not found" />
               <h1>Page Not Found</h1>
-              <PP>we are sorry, the page you requested could not be found</PP>
+              <PP>we are sorry, the page you requested could not be found.</PP>
             </Div2>
           </Div1>
         </Div>

@@ -24,13 +24,13 @@ import CartContext from '../../NXT.JS/Nxt'
 
 const Constlist = {
   initial: 'INITIAL',
-  progress: 'PROGESS',
+  progress: 'PROGRESS',
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
 
 class Trend extends Component {
-  state = {List: [], status: Constlist.initial, is: false}
+  state = {List: [], status: Constlist.initial}
 
   componentDidMount() {
     this.FetchTrend()
@@ -80,29 +80,37 @@ class Trend extends Component {
     </D>
   )
 
-  failure = () => {
-    const {is} = this.state
+  failure = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {isdark} = value
 
-    const Src = is
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-    return (
-      <D>
-        <NoVs src={Src} alt="failure view" />
-        <h1>Oops! Something Went Wrong</h1>
-        <PP>We are having some trouble</PP>
-        <Retry type="button" onClick={this.FetchTrend}>
-          Retry
-        </Retry>
-      </D>
-    )
-  }
+        const Src = isdark
+          ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+          : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+
+        return (
+          <D>
+            <NoVs src={Src} alt="failure view" />
+            <h1>Oops! Something Went Wrong</h1>
+            <PP>
+              We are having some trouble to complete your request. Please try
+              again.
+            </PP>
+            <Retry type="button" onClick={this.FetchTrend}>
+              Retry
+            </Retry>
+          </D>
+        )
+      }}
+    </CartContext.Consumer>
+  )
 
   success = () => {
     const {List} = this.state
 
     return (
-      <Divele data-testid="videoItemDetails">
+      <Divele data-testid="trending">
         <Div3>
           <AiFillFire size="36" color="red" />
           <Heading>Trending</Heading>

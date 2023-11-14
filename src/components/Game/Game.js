@@ -5,6 +5,7 @@ import {SiYoutubegaming} from 'react-icons/si'
 import Navbar from '../Nav/nav'
 
 import CatAlign from '../Navalign/align'
+import CartContext from '../../NXT.JS/Nxt'
 
 import {
   Div,
@@ -19,13 +20,11 @@ import {
   Retry,
 } from './Gamepg'
 
-import CartContext from '../../NXT.JS/Nxt'
-
 import GameCard from '../GameCard/GameCard'
 
 const Constlist = {
   initial: 'INITIAL',
-  progress: 'PROGESS',
+  progress: 'PROGRESS',
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
@@ -96,23 +95,31 @@ class Game extends Component {
     </D>
   )
 
-  failure = () => {
-    const {is} = this.state
+  failure = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {isdark} = value
 
-    const Src = is
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-    return (
-      <D>
-        <NoVs src={Src} alt="failure view" />
-        <h1>Oops! Something Went Wrong</h1>
-        <PP>We are having some trouble</PP>
-        <Retry type="button" onClick={this.FetchGames}>
-          Retry
-        </Retry>
-      </D>
-    )
-  }
+        const Src = isdark
+          ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+          : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+
+        return (
+          <D>
+            <NoVs src={Src} alt="failure view" />
+            <h1>Oops! Something Went Wrong</h1>
+            <PP>
+              We are having some trouble to complete your request. Please try
+              again.
+            </PP>
+            <Retry type="button" onClick={this.FetchGames}>
+              Retry
+            </Retry>
+          </D>
+        )
+      }}
+    </CartContext.Consumer>
+  )
 
   result = () => {
     const {status} = this.state

@@ -7,7 +7,7 @@ const GameCard = props => {
   return (
     <Navigate to={`/videos/${id}`}>
       <List>
-        <Img src={thumbnail} />
+        <Img src={thumbnail} alt="video thumbnail" />
         <Para>{title}</Para>
         <Div color="#94a3b8">
           <Para>{Views} Watching Worldwide</Para>

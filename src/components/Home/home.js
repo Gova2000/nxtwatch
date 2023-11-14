@@ -34,7 +34,7 @@ import Cards from '../Homecards/Card'
 
 const Constlist = {
   initial: 'INITIAL',
-  progress: 'PROGESS',
+  progress: 'PROGRESS',
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
@@ -45,6 +45,7 @@ class Home extends Component {
     getdata: '',
     tog: false,
     Url: 'https://apis.ccbp.in/videos/',
+
     status: Constlist.initial,
     is: false,
   }
@@ -101,7 +102,7 @@ class Home extends Component {
   }
 
   Icon = () => {
-    const {getdata} = this.state
+    const {getdata, failUrl} = this.state
     this.setState(
       {Url: `https://apis.ccbp.in/videos/all?search=${getdata}`},
       this.Fetch,
@@ -159,9 +160,9 @@ class Home extends Component {
             </Input>
 
             <CardList>
-              {List.map(each => (
-                <Cards each={each} key={each.id} />
-              ))}
+              {List.length > 0
+                ? List.map(each => <Cards each={each} key={each.id} />)
+                : this.ListEmpty()}
             </CardList>
           </RightDiv>
         )
@@ -169,23 +170,45 @@ class Home extends Component {
     </CartContext.Consumer>
   )
 
-  failure = () => {
-    const {is} = this.state
+  failure = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {isdark} = value
 
-    const Src = is
-      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
-    return (
-      <D>
-        <NoVs src={Src} alt="failure view" />
-        <h1>Oops! Something Went Wrong</h1>
-        <PP>We are having some trouble</PP>
-        <Retry type="button" onClick={this.Fetch}>
-          Retry
-        </Retry>
-      </D>
-    )
-  }
+        const Src = isdark
+          ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+          : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+
+        return (
+          <D>
+            <NoVs src={Src} alt="failure view" />
+            <h1>Oops! Something Went Wrong</h1>
+            <PP>
+              We are having some trouble to complete your request. Please try
+              again.
+            </PP>
+            <Retry type="button" onClick={this.Fetch}>
+              Retry
+            </Retry>
+          </D>
+        )
+      }}
+    </CartContext.Consumer>
+  )
+
+  ListEmpty = () => (
+    <D>
+      <NoVs
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+        alt="no videos"
+      />
+      <h1>No Search results found</h1>
+      <PP>Try different key words or remove search filter</PP>
+      <Retry type="button" onClick={this.Fetch}>
+        Retry
+      </Retry>
+    </D>
+  )
 
   Result = () => {
     const {status} = this.state

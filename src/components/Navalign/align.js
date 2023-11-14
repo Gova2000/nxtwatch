@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 import {AiFillHome, AiFillFire} from 'react-icons/ai'
 import {SiYoutubegaming} from 'react-icons/si'
@@ -109,4 +109,4 @@ const CatAlign = () => (
   </CartContext.Consumer>
 )
 
-export default CatAlign
+export default withRouter(CatAlign)

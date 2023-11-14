@@ -111,7 +111,9 @@ class Login extends Component {
             <input type="checkbox" id="show" onClick={this.check} />
             <label htmlFor="show">Show Password</label>
           </Check>
-          <LoginButton type="submit">Login</LoginButton>
+          <LoginButton type="submit" onClick={this.FetchDetails}>
+            Login
+          </LoginButton>
           {err && <Para>*{error}</Para>}
         </Logincard>
       </Loginbg>
