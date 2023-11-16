@@ -44,7 +44,6 @@ class Home extends Component {
     List: [],
     getdata: '',
     tog: false,
-    Url: 'https://apis.ccbp.in/videos/',
 
     status: Constlist.initial,
     is: false,
@@ -68,7 +67,9 @@ class Home extends Component {
   }
 
   Fetch = async () => {
-    const {Url, status} = this.state
+    const {status, getdata} = this.state
+    const Url = `https://apis.ccbp.in/videos/all?search=${getdata}`
+
     const check = Cookies.get('jwt_token')
     this.setState({status: Constlist.progress})
 
@@ -101,12 +102,10 @@ class Home extends Component {
     this.setState({getdata: event.target.value})
   }
 
-  Icon = () => {
-    const {getdata, failUrl} = this.state
-    this.setState(
-      {Url: `https://apis.ccbp.in/videos/all?search=${getdata}`},
-      this.Fetch,
-    )
+  Icon = event => {
+    if (event.key === 'Enter') {
+      this.Fetch()
+    }
   }
 
   close = () => {
