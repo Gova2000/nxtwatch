@@ -37,7 +37,7 @@ export const Catbutton = styled.button`
   margin: 10px;
   cursor: 'pointer';
 `
-export const Heading = styled.p`
+export const Para = styled.p`
   font-weight: bold;
   color: ${props => props.bgcolor};
   margin: 5px;

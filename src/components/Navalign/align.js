@@ -6,7 +6,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 
 import CartContext from '../../NXT.JS/Nxt'
 
-import {Itemdiv, Div, Div2, Catbutton, Heading, IMG} from './alignpg'
+import {Itemdiv, Div, Div2, Catbutton, Para, IMG} from './alignpg'
 
 import './index.css'
 
@@ -48,7 +48,7 @@ const CatAlign = () => (
                 <Itemdiv bgcolor={bgcolor}>
                   <Catbutton type="button" bgcolor={red1} onClick={homebtn}>
                     <AiFillHome size="16" />
-                    <Heading bgcolor={color}>Home</Heading>
+                    <Para bgcolor={color}>Home</Para>
                   </Catbutton>
                 </Itemdiv>
               </Link>
@@ -57,7 +57,7 @@ const CatAlign = () => (
                 <Itemdiv bgcolor={bgcolor}>
                   <Catbutton type="button" bgcolor={red2} onClick={trendbtn}>
                     <AiFillFire size="16" />
-                    <Heading bgcolor={color}>Trending</Heading>
+                    <Para bgcolor={color}>Trending</Para>
                   </Catbutton>
                 </Itemdiv>
               </Link>
@@ -66,7 +66,7 @@ const CatAlign = () => (
                 <Itemdiv bgcolor={bgcolor}>
                   <Catbutton type="button" bgcolor={red3} onClick={gamebtn}>
                     <SiYoutubegaming size="16" />
-                    <Heading bgcolor={color}>Gaming</Heading>
+                    <Para bgcolor={color}>Gaming</Para>
                   </Catbutton>
                 </Itemdiv>
               </Link>
@@ -75,13 +75,13 @@ const CatAlign = () => (
                 <Itemdiv bgcolor={bgcolor}>
                   <Catbutton type="button" bgcolor={red4} onClick={savebtn}>
                     <MdPlaylistAdd size="16" />
-                    <Heading bgcolor={color}>Saved videos</Heading>
+                    <Para bgcolor={color}>Saved videos</Para>
                   </Catbutton>
                 </Itemdiv>
               </Link>
             </Div2>
             <Div2>
-              <Heading bgcolor={color}>CONTACT US</Heading>
+              <Para bgcolor={color}>CONTACT US</Para>
               <Itemdiv>
                 <IMG
                   src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
@@ -98,9 +98,9 @@ const CatAlign = () => (
                 />
               </Itemdiv>
 
-              <Heading bgcolor={color}>
+              <Para bgcolor={color}>
                 Enjoy! Now to see your channels and recommendations!
-              </Heading>
+              </Para>
             </Div2>
           </Div>
         </>

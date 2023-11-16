@@ -122,7 +122,7 @@ class Navbar extends Component {
         return (
           <Navmainbg bgcolor={bg}>
             <IMG src={LOGO} alt="website logo" />
-            <Navdiv as="li">
+            <Navdiv as="ul">
               <Colorbtn
                 type="button"
                 onClick={theam1}

@@ -161,54 +161,40 @@ class PlayVideo extends Component {
         const stext = save ? 'Saved' : 'Save'
 
         return (
-          <PlayBG
-            bgcolor={bgcolor}
-            color={color}
-            data-testid="videoItemDetails"
-          >
-            <Navbar />
-            <Divcol>
-              <CatAlign />
-              {status === 'SUCCESS' ? (
-                <Play>
-                  <ReactPlayer url={URL} controls width="95%" height="500px" />
-                  <p>{title}</p>
-                  <Div colo="space-between">
-                    <P colo="#94a3b8">
-                      {Views} Views . {date}
-                    </P>
-                    <Div>
-                      <Div as="button" onClick={this.like} color={colored}>
-                        {likeicon}
-                        <P>Like</P>
-                      </Div>
-                      <Div as="button" onClick={this.dislike} color={colored1}>
-                        {dislikeicon}
-                        <P>Dislike</P>
-                      </Div>
-                      <Div as="button" onClick={this.save} color={colored2}>
-                        <RiPlayListAddFill />
-                        <P onClick={Vcs}>{stext}</P>
-                      </Div>
-                    </Div>
-                  </Div>
-                  <hr />
-                  <Div>
-                    <ProImg src={profileImg} alt="channel logo" />
-                    <Div>
-                      <div>
-                        <p>{name}</p>
-                        <P colo="#94a3b8">{SubScribers} Subscribers</P>
-                        <p>{description}</p>
-                      </div>
-                    </Div>
-                  </Div>
-                </Play>
-              ) : (
-                this.failure()
-              )}
-            </Divcol>
-          </PlayBG>
+          <Play>
+            <ReactPlayer url={URL} controls width="95%" height="500px" />
+            <p>{title}</p>
+            <Div colo="space-between">
+              <P colo="#94a3b8">
+                {Views} Views . {date}
+              </P>
+              <Div>
+                <Div as="button" onClick={this.like} color={colored}>
+                  {likeicon}
+                  <P>Like</P>
+                </Div>
+                <Div as="button" onClick={this.dislike} color={colored1}>
+                  {dislikeicon}
+                  <P>Dislike</P>
+                </Div>
+                <Div as="button" onClick={this.save} color={colored2}>
+                  <RiPlayListAddFill />
+                  <P onClick={Vcs}>{stext}</P>
+                </Div>
+              </Div>
+            </Div>
+            <hr />
+            <Div>
+              <ProImg src={profileImg} alt="channel logo" />
+              <Div>
+                <div>
+                  <p>{name}</p>
+                  <P colo="#94a3b8">{SubScribers} Subscribers</P>
+                  <p>{description}</p>
+                </div>
+              </Div>
+            </Div>
+          </Play>
         )
       }}
     </CartContext.Consumer>
@@ -220,8 +206,73 @@ class PlayVideo extends Component {
     </D>
   )
 
+  result = () => {
+    const {status} = this.state
+
+    switch (status) {
+      case Constlist.success:
+        return this.Play()
+      case Constlist.failure:
+        return this.failure()
+      case Constlist.progress:
+        return this.loading()
+      default:
+        return null
+    }
+  }
+
   render() {
-    return <>{this.Play()}</>
+    return (
+      <CartContext.Consumer>
+        {value => {
+          const {isdark, AddData} = value
+
+          const {video, liked, dislike, save, status} = this.state
+          const {
+            id,
+            URL,
+            Views,
+            title,
+            profileImg,
+            date,
+            description,
+            SubScribers,
+            name,
+          } = video
+
+          const Vcs = () => {
+            AddData({...video})
+          }
+
+          const bgcolor = isdark ? '#0f0f0f' : '#ffffff'
+
+          const color = isdark ? '#ffffff' : '#0f0f0f'
+
+          const likeicon = liked ? <AiFillLike /> : <AiOutlineLike />
+          const dislikeicon = dislike ? <AiFillDislike /> : <AiOutlineDislike />
+
+          const colored = liked ? '#2563eb' : '#64748b'
+          const colored1 = dislike ? '#2563eb' : '#64748b'
+          const colored2 = save ? '#2563eb' : '#64748b'
+
+          const stext = save ? 'Saved' : 'Save'
+
+          return (
+            <PlayBG
+              bgcolor={bgcolor}
+              color={color}
+              data-testid="videoItemDetails"
+            >
+              <Navbar />
+              <Divcol>
+                <CatAlign />
+                {this.result()}
+              </Divcol>
+            </PlayBG>
+          )
+        }}
+      </CartContext.Consumer>
+    )
   }
 }
 
