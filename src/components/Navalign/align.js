@@ -62,7 +62,7 @@ const CatAlign = () => (
                 </Itemdiv>
               </Link>
 
-              <Link className="Link" to="/Gaming">
+              <Link className="Link" to="/gaming">
                 <Itemdiv bgcolor={bgcolor}>
                   <Catbutton type="button" bgcolor={red3} onClick={gamebtn}>
                     <SiYoutubegaming size="16" />
